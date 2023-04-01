@@ -1,0 +1,23 @@
+.base {
+  @apply bg-gradient-to-br from-orange-400 to-orange-600;
+}
+
+.base-container {
+  @apply container grid place-items-center min-h-screen py-16;
+}
+
+.card {
+  @apply p-8 rounded-3xl bg-white shadow-xl w-full sm:w-96 text-center;
+}
+
+.card h1 {
+  @apply text-3xl font-bold;
+}
+
+.card form {
+  @apply flex flex-col gap-y-4 my-8;
+}
+
+.card a {
+  @apply text-sm;
+}
