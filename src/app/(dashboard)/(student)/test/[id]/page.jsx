@@ -9,13 +9,14 @@ import Button from '#/components/button';
 import { alertState } from '#/recoil/alert';
 import { useSetRecoilState } from 'recoil';
 import { useRouter } from 'next/navigation';
+import Countdown from 'react-countdown';
 
 export default function Page({ params: { id } }) {
   const router = useRouter();
 
   const setAlert = useSetRecoilState(alertState);
 
-  const { data: test, isLoading } = useSWR(testByIdKey(id), () => getTestById(id));
+  const { data: test, isLoading, error } = useSWR(testByIdKey(id), () => getTestById(id));
 
   const [answers, setAnswers] = useState([]);
 
@@ -36,14 +37,18 @@ export default function Page({ params: { id } }) {
 
   return (
     <>
-      <div className="flex justify-between flex-wrap gap-2">
-        <div className="flex flex-col [&>p]:text-xl [&>p]:font-bold">
-          <p>Starts: 01.01.23, 12:00</p>
-          <p>Ends: 01.01.23, 17:00</p>
-        </div>
+      {!isLoading && !error && (
+        <div className="flex justify-between flex-wrap gap-2">
+          <div className="flex flex-col [&>p]:text-xl [&>p]:font-bold">
+            <p>Starts: {test.startDate}</p>
+            <p>Ends: {test.endDate}</p>
+          </div>
 
-        <p className="text-lg font-medium">Remaining time: 02:54</p>
-      </div>
+          <p className="text-lg font-medium">
+            <Countdown date={test.endDate} />
+          </p>
+        </div>
+      )}
 
       {isLoading ? (
         <Card className="w-full flex flex-col gap-y-8 mt-8">
@@ -66,7 +71,7 @@ export default function Page({ params: { id } }) {
           </Button>
         </Card>
       ) : (
-        <p className="mt-8">No question found</p>
+        <p className="mt-8">{error ? error?.response?.data?.message : 'No question found'}</p>
       )}
     </>
   );

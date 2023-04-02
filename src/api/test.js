@@ -7,7 +7,7 @@ const submitKey = `${testKey}/submit`;
 
 const getTestById = async (id) => {
   const response = await axiosPrivate.get(testByIdKey(id));
-  return response.data;
+  return testModel(response.data);
 };
 
 const addTest = async (body) => {
@@ -26,3 +26,11 @@ const submitTest = async (body) => {
 };
 
 export { testByIdKey, takesKey, getTestById, addTest, getTakes, submitTest };
+
+const testModel = (data) => {
+  return {
+    ...data,
+    startDate: new Date(data.startDate).toLocaleString(),
+    endDate: new Date(data.endDate).toLocaleString(),
+  };
+};
