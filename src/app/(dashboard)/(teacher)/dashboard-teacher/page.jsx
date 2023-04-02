@@ -29,7 +29,7 @@ export default function Page() {
               <Card key={key} loading className="h-32" />
             ))}
         </Card>
-      ) : quizzes.length ? (
+      ) : quizzes?.length ? (
         <Card className="mt-8">
           <ul className="divide-y divide-black/10">
             {quizzes.map((quiz, index) => (
