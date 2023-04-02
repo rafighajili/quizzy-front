@@ -30,12 +30,12 @@ const getQuestionById = async (id, questionId) => {
 };
 
 const editQuestion = async (id, questionId, body) => {
-  const response = await axiosPrivate.put(questionKey(id, questionId), body);
+  const response = await axiosPrivate.put(questionByIdKey(id, questionId), body);
   return response.data;
 };
 
 const deleteQuestion = async (id, questionId) => {
-  const response = await axiosPrivate.delete(questionKey(id, questionId));
+  const response = await axiosPrivate.delete(questionByIdKey(id, questionId));
   return response.data;
 };
 
