@@ -1,4 +1,4 @@
-import { addQuestion, editQuestion, questionsKey } from '#/api/question';
+import { addQuestion, editQuestion, questionKey } from '#/api/quiz';
 import Button from '#/components/button';
 import Input from '#/components/input';
 import Modal from '#/components/modal';
@@ -48,7 +48,7 @@ export default function QuestionModal({ show, onClose, quizId, options }) {
 
       setAlert({ type: true, message: `Question was ${mode}ed successfully!` });
       onClose();
-      mutate(questionsKey(quizId));
+      mutate(questionKey(quizId));
       reset(data);
     } catch {
       setAlert({ type: false, message: 'Something went wrong!' });
@@ -138,7 +138,7 @@ export default function QuestionModal({ show, onClose, quizId, options }) {
             <div className="flex flex-col gap-y-2">
               {fields.map((field, index) => (
                 <div key={field.id} className="flex items-center gap-x-2">
-                  <Input {...{ register }} name={`options.${index}.optionText`} required errorMsg={errors.optionText?.message} className="flex-1" />
+                  <Input {...{ register }} name={`options.${index}.optionText`} required className="flex-1" />
 
                   <label className="flex items-center gap-x-2">
                     <input type="radio" value="correct" {...register(`options.${index}.isCorrect`)} />

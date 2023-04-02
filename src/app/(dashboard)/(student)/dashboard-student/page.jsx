@@ -41,25 +41,23 @@ export default function Page() {
       ) : (
         <Card className="mt-8">
           <div className="overflow-x-auto">
-            <table className="table-fixed [&>*]:whitespace-nowrap">
+            <table className="table-fixed [&>*]:whitespace-nowrap w-full">
               <thead className="border-b border-black/10">
                 <tr className="[&>*]:py-2 [&>*]:px-8 [&>*]:text-start">
                   <th>Your previous takes</th>
                   <th>Score</th>
                   <th>Success rate</th>
-                  <th></th>
                 </tr>
               </thead>
 
               <tbody>
-                <tr className="[&>*]:py-2 [&>*]:px-8 even:bg-black/5">
-                  <td>Lorem ipsum dolor sit amet.</td>
-                  <td>31</td>
-                  <td>69</td>
-                  <td>
-                    <Button>See answers</Button>
-                  </td>
-                </tr>
+                {takes?.map(({ id, score, successRate, testTitle }) => (
+                  <tr key={id} className="[&>*]:py-2 [&>*]:px-8 even:bg-black/5">
+                    <td>{testTitle}</td>
+                    <td>{score}</td>
+                    <td>{`${successRate.toFixed(2)}%`}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>

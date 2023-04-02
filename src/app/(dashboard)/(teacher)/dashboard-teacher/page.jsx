@@ -1,6 +1,6 @@
 'use client';
 
-import { getQuizzes, getQuizzesKey } from '#/api/quiz';
+import { getQuizzes, quizKey } from '#/api/quiz';
 import Button from '#/components/button';
 import Card from '#/components/card';
 import { useState } from 'react';
@@ -10,7 +10,7 @@ import QuizModal from './_components/quiz-modal';
 import TestModal from './_components/test-modal';
 
 export default function Page() {
-  const { data: quizzes, isLoading } = useSWR(getQuizzesKey, getQuizzes);
+  const { data: quizzes, isLoading } = useSWR(quizKey, getQuizzes);
 
   const [isQuizModalOpen, setIsQuizModalOpen] = useState(false);
 
@@ -29,7 +29,7 @@ export default function Page() {
               <Card key={key} loading className="h-32" />
             ))}
         </Card>
-      ) : quizzes?.length ? (
+      ) : quizzes.length ? (
         <Card className="mt-8">
           <ul className="divide-y divide-black/10">
             {quizzes.map((quiz, index) => (

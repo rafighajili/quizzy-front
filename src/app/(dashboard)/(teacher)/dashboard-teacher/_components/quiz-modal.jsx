@@ -1,4 +1,4 @@
-import { addQuiz, getQuizzesKey } from '#/api/quiz';
+import { addQuiz, quizKey } from '#/api/quiz';
 import Button from '#/components/button';
 import Input from '#/components/input';
 import Modal from '#/components/modal';
@@ -25,7 +25,7 @@ export default function QuizModal({ show, onClose }) {
       await addQuiz(data);
       setAlert({ type: true, message: 'Quiz was added successfully!' });
       onClose();
-      mutate(getQuizzesKey);
+      mutate(quizKey);
     } catch {
       setAlert({ type: false, message: 'Something went wrong!' });
     }

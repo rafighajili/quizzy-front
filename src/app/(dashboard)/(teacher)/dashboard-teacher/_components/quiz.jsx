@@ -1,6 +1,7 @@
 'use client';
 
 import Button from '#/components/button';
+import Test from './test';
 
 export default function Quiz({ quiz, setIsTestModalOpen, setCurrentQuizId, index }) {
   const { quizId, quizTitle, tests } = quiz;
@@ -29,9 +30,7 @@ export default function Quiz({ quiz, setIsTestModalOpen, setCurrentQuizId, index
 
       <ul>
         {tests.map(({ testId, testTitle }, testIndex) => (
-          <li key={testId} className="ml-6 mt-2 first:mt-8 last:mb-8 font-medium">
-            {`${index + 1}.${testIndex + 1}. ${testTitle}`}
-          </li>
+          <Test key={testId} {...{ testId, testTitle, testIndex, index }} />
         ))}
       </ul>
     </li>

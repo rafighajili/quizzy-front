@@ -1,4 +1,4 @@
-import { getQuizzesKey } from '#/api/quiz';
+import { quizKey } from '#/api/quiz';
 import { addTest } from '#/api/test';
 import Button from '#/components/button';
 import Input from '#/components/input';
@@ -26,7 +26,7 @@ export default function TestModal({ show, onClose, quizId }) {
       await addTest({ ...data, quizId });
       setAlert({ type: true, message: 'Test was added successfully!' });
       onClose();
-      mutate(getQuizzesKey);
+      mutate(quizKey);
     } catch {
       setAlert({ type: false, message: 'Something went wrong!' });
     }

@@ -1,6 +1,6 @@
 'use client';
 
-import { getQuestions, questionsKey } from '#/api/question';
+import { getQuestions, questionKey } from '#/api/quiz';
 import Button from '#/components/button';
 import Card from '#/components/card';
 import { useState } from 'react';
@@ -9,7 +9,7 @@ import Question from './_components/question';
 import QuestionModal from './_components/question-modal';
 
 export default function Page({ params: { quizId } }) {
-  const { data: questions, isLoading } = useSWR(questionsKey(quizId), () => getQuestions(quizId));
+  const { data: questions, isLoading } = useSWR(questionKey(quizId), () => getQuestions(quizId));
 
   const [isQuestionModalOpen, setIsQuestionModalOpen] = useState(false);
   const [questionModalOptions, setQuestionModalOptions] = useState({});

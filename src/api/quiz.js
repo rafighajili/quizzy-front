@@ -1,13 +1,42 @@
 import { axiosPrivate } from './axios';
 
-export const getQuizzesKey = '/api/Quiz',
-  getQuizzes = async () => {
-    const response = await axiosPrivate.get(getQuizzesKey);
-    return response.data;
-  };
+const quizKey = '/api/Quiz';
+const questionKey = (id) => `${quizKey}/${id}/questions`;
+const questionByIdKey = (id, questionId) => `${questionKey(id)}/${questionId}`;
 
-export const addQuizKey = '/api/Quiz',
-  addQuiz = async (body) => {
-    const response = await axiosPrivate.post(addQuizKey, body);
-    return response.data;
-  };
+const getQuizzes = async () => {
+  const response = await axiosPrivate.get(quizKey);
+  return response.data;
+};
+
+const addQuiz = async (body) => {
+  const response = await axiosPrivate.post(quizKey, body);
+  return response.data;
+};
+
+const getQuestions = async (id) => {
+  const response = await axiosPrivate.get(questionKey(id));
+  return response.data;
+};
+
+const addQuestion = async (id, body) => {
+  const response = await axiosPrivate.post(questionKey(id), { question: body });
+  return response.data;
+};
+
+const getQuestionById = async (id, questionId) => {
+  const response = await axiosPrivate.get(questionByIdKey(id, questionId));
+  return response.data;
+};
+
+const editQuestion = async (id, questionId, body) => {
+  const response = await axiosPrivate.put(questionKey(id, questionId), body);
+  return response.data;
+};
+
+const deleteQuestion = async (id, questionId) => {
+  const response = await axiosPrivate.delete(questionKey(id, questionId));
+  return response.data;
+};
+
+export { quizKey, questionKey, questionByIdKey, getQuizzes, addQuiz, getQuestions, addQuestion, getQuestionById, editQuestion, deleteQuestion };

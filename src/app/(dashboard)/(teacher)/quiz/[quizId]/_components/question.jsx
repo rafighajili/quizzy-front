@@ -1,4 +1,4 @@
-import { deleteQuestion, questionsKey } from '#/api/question';
+import { deleteQuestion, questionKey } from '#/api/quiz';
 import { useSWRConfig } from 'swr';
 
 export default function Question({ question, quizId, setIsQuestionModalOpen, setQuestionModalOptions, index }) {
@@ -8,7 +8,7 @@ export default function Question({ question, quizId, setIsQuestionModalOpen, set
 
   const onDelete = async () => {
     await deleteQuestion(quizId, id);
-    mutate(questionsKey(quizId));
+    mutate(questionKey(quizId));
   };
 
   return (

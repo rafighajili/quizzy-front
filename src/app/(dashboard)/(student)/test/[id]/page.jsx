@@ -1,25 +1,38 @@
 'use client';
 
-import { getTest, testByIdKey } from '#/api/test';
+import { getTest, submitTest, testByIdKey } from '#/api/test';
 import Card from '#/components/card';
 import useSWR from 'swr';
 import Question from './_components/question';
 import { useEffect, useState } from 'react';
-let renderCount = 0;
+import Button from '#/components/button';
+import { alertState } from '#/recoil/alert';
+import { useSetRecoilState } from 'recoil';
+import { useRouter } from 'next/navigation';
 
 export default function Page({ params: { id } }) {
-  renderCount++;
+  const router = useRouter();
+
+  const setAlert = useSetRecoilState(alertState);
+
   const { data: test, isLoading } = useSWR(testByIdKey(id), () => getTest(id));
 
   const [answers, setAnswers] = useState([]);
 
   useEffect(() => {
     if (test) {
-      setAnswers(test.questions.map((question) => ({ questionId: question.id })));
+      setAnswers(test.questions.map((question) => ({ questionId: question.id, openEndedAnswer: question.type === 2 ? '' : undefined, answers: question.type !== 2 ? [] : undefined })));
     }
   }, [test]);
 
-  console.log(answers);
+  const onSubmit = async () => {
+    try {
+      await submitTest({ testId: id, questions: answers });
+      router.push('/dashboard-student');
+    } catch (error) {
+      setAlert({ type: false, message: error?.response?.data?.message ?? 'Something went wrong!' });
+    }
+  };
 
   return (
     <>
@@ -28,8 +41,6 @@ export default function Page({ params: { id } }) {
           <p>Starts: 01.01.23, 12:00</p>
           <p>Ends: 01.01.23, 17:00</p>
         </div>
-
-        <p>{renderCount}</p>
 
         <p className="text-lg font-medium">Remaining time: 02:54</p>
       </div>
@@ -49,6 +60,10 @@ export default function Page({ params: { id } }) {
               <Question key={question.id} {...{ question, setAnswers, index }} />
             ))}
           </ul>
+
+          <Button className="mt-4 ml-auto" onClick={onSubmit}>
+            Submit
+          </Button>
         </Card>
       ) : (
         <p className="mt-8">No question found</p>
