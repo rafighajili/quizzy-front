@@ -2,7 +2,7 @@
 
 import { getTestById, submitTest, testByIdKey } from '#/api/test';
 import Card from '#/components/card';
-import useSWR from 'swr';
+import useSWRImmutable from 'swr/immutable';
 import Question from './_components/question';
 import { useEffect, useState } from 'react';
 import Button from '#/components/button';
@@ -16,7 +16,7 @@ export default function Page({ params: { id } }) {
 
   const setAlert = useSetRecoilState(alertState);
 
-  const { data: test, isLoading, error } = useSWR(testByIdKey(id), () => getTestById(id));
+  const { data: test, isLoading, error } = useSWRImmutable(testByIdKey(id), () => getTestById(id));
 
   const [answers, setAnswers] = useState([]);
 
