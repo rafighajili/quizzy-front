@@ -1,6 +1,6 @@
 'use client';
 
-import { getTest, submitTest, testByIdKey } from '#/api/test';
+import { getTestById, submitTest, testByIdKey } from '#/api/test';
 import Card from '#/components/card';
 import useSWR from 'swr';
 import Question from './_components/question';
@@ -15,7 +15,7 @@ export default function Page({ params: { id } }) {
 
   const setAlert = useSetRecoilState(alertState);
 
-  const { data: test, isLoading } = useSWR(testByIdKey(id), () => getTest(id));
+  const { data: test, isLoading } = useSWR(testByIdKey(id), () => getTestById(id));
 
   const [answers, setAnswers] = useState([]);
 
