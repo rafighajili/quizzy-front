@@ -20,9 +20,9 @@ const getTakes = async (id, params) => {
   return response.data;
 };
 
-const submit = async (body) => {
+const submitTest = async (body) => {
   const response = await axiosPrivate.post(submitKey, body);
   return response.data;
 };
 
-export { testByIdKey, takesKey, getTestById, addTest, getTakes, submit };
+export { testByIdKey, takesKey, getTestById, addTest, getTakes, submitTest };

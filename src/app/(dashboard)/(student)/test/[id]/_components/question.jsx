@@ -87,7 +87,6 @@ export default function Question({ question, setAnswers, index }) {
                 <label key={optionId} className="flex gap-x-2 w-fit">
                   <input type={type === 0 ? 'radio' : type === 1 ? 'checkbox' : ''} name={id} value={optionId} onChange={type === 0 ? handleSingleChoice : type === 1 ? handleMultiChoice : null} />
                   <p>{optionText}</p>
-                  <p>{optionId}</p>
                 </label>
               ))}
             </>
