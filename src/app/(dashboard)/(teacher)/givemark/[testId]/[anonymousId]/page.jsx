@@ -11,7 +11,7 @@ import { useFieldArray, useForm } from 'react-hook-form';
 import { useSetRecoilState } from 'recoil';
 import useSWR from 'swr';
 
-export default function Page({ params: { anonymousId } }) {
+export default function Page({ params: { anonymousId, testId } }) {
   const router = useRouter();
 
   const setAlert = useSetRecoilState(alertState);
@@ -35,13 +35,11 @@ export default function Page({ params: { anonymousId } }) {
   const onSubmit = async (data) => {
     try {
       await postGivemark(anonymousId, data);
-      router.push('/dashboard-teacher');
+      router.push('/givemark/' + testId);
     } catch (error) {
       setAlert({ type: false, message: error?.response?.data?.message ?? 'Something went wrong!' });
     }
   };
-
-  console.log(errors);
 
   return isLoading ? (
     <Card className="w-full flex flex-col gap-y-8">
@@ -56,7 +54,7 @@ export default function Page({ params: { anonymousId } }) {
       <form onSubmit={handleSubmit(onSubmit)}>
         <ul className="divide-y divide-black/10">
           {data.map(({ takeQuestionId, questionText, studentAnswer }, index) => (
-            <li key={takeQuestionId} className="space-y-2">
+            <li key={takeQuestionId} className="space-y-2 py-8">
               <p>
                 <strong>Question text: </strong>
                 {questionText}
@@ -74,7 +72,7 @@ export default function Page({ params: { anonymousId } }) {
                 {...{ register }}
                 name={`marks.${index}.score`}
                 type="number"
-                errorMsg={errors?.marks?.[index].score.message}
+                errorMsg={errors?.marks?.[index]?.score.message}
                 required
               />
             </li>
